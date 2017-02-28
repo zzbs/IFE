@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <style>
+          div{
+            margin:auto;
+            width:800px;
+            text-align: center;
+          }
+          body {
+            background-color: #404040;
+          }
+        </style>
+	</head>
+	<body onload="init()">
+        <div>
+    	<canvas id="mainCanvas" width="800px" height="600px"></canvas>
+        </div>
+    	<script type="text/javascript" src="three.js"></script>
+    	<script>
+    		function init()
+    		{
+    			var renderer= new THREE.WebGLRenderer({canvas: document.getElementById('mainCanvas')});
+    			 renderer.setClearColor(0x404040); // black
+                 renderer.shadowMap.enabled =true;
+                 renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+
+    			var scene = new THREE.Scene();
+
+    			var camera = new THREE.PerspectiveCamera(80, 4 / 3, 1, 1000);
+				camera.position.set(5,3,4);
+                camera.lookAt(new THREE.Vector3(0,0,0))
+
+				scene.add(camera);
+
+
+                var texture =new THREE.TextureLoader().load('0.jpg',function () {
+                    renderer.render(scene, camera);
+    });
+                var material=new THREE.MeshLambertMaterial({
+                    map:texture
+                })
+                var material1=new THREE.MeshLambertMaterial({
+                    color:0xE0E0E0
+                })
+
+				var cube = new THREE.Mesh(new THREE.CubeGeometry(4, 2, 2),material
+				);
+                cube.castShadow=true;
+				scene.add(cube);
+
+                var torus=new THREE.TorusGeometry(0.5,0.15,20,20);
+                var torus1=new THREE.Mesh(torus,material1);
+                torus1.position.set(-1,-1,1);
+                torus1.castShadow=true;
+                scene.add(torus1);
+                
+                var torus2=new THREE.Mesh(torus,material1);
+                torus2.position.set(1,-1,1);
+                torus2.castShadow=true;
+                scene.add(torus2);
+
+                var torus3=new THREE.Mesh(torus,material1);
+                torus3.position.set(1,-1,-1);
+                torus3.castShadow=true;
+                scene.add(torus3);
+
+                var torus4=new THREE.Mesh(torus,material1);
+                torus4.position.set(-1,-1,-1);
+                torus4.castShadow=true;
+                scene.add(torus4);
+
+                var plane=new THREE.Mesh(new THREE.PlaneGeometry( 14, 14, 100, 100), new THREE.MeshLambertMaterial({
+                    color:0x7D8b61
+                }))
+                plane.rotateX(-0.5*Math.PI);
+                plane.position.set(-3,-1.5,-2);
+                plane.receiveShadow=true;
+                scene.add(plane);
+
+                var light=new THREE.AmbientLight( 0x424242 );
+                scene.add(light);
+                var light1 = new THREE.PointLight( 0xffffff, 0.8, 100);
+                light1.position.set(-2,1.5,3);
+                scene.add(light1);
+
+                var light2 = new THREE.DirectionalLight(0xffffff,1);
+                light2.position.set(-4,4,4);
+                light2.castShadow=true;
+                scene.add(light2);
+				renderer.render(scene, camera);
+    		}
+    	</script>
+	</body>
+</html>
