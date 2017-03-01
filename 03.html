@@ -33,19 +33,29 @@
 
 				scene.add(camera);
 
+                var loader = new THREE.TextureLoader();
+                // load a resource
+                loader.load(
+                    // resource URL
+                    '0.jpg',
+                    // Function when resource is loaded
+                    function ( texture ) {
+                    // do something with the texture
+                    var material = new THREE.MeshBasicMaterial( {
+                    map: texture
+                    } );
+                    var cube = new THREE.Mesh(new THREE.CubeGeometry(4, 2, 2),material);
+                    cube.castShadow=true;
+                    scene.add(cube);
+                    renderer.render(scene,camera);
 
-                var texture =new THREE.TextureLoader().load('0.jpg');
-                var material=new THREE.MeshLambertMaterial({
-                    map:texture
-                })
+    }
+);
                 var material1=new THREE.MeshLambertMaterial({
                     color:0xE0E0E0
                 })
 
-				var cube = new THREE.Mesh(new THREE.CubeGeometry(4, 2, 2),material
-				);
-                cube.castShadow=true;
-				scene.add(cube);
+				
 
                 var torus=new THREE.TorusGeometry(0.5,0.15,20,20);
                 var torus1=new THREE.Mesh(torus,material1);
