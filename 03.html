@@ -34,9 +34,7 @@
 				scene.add(camera);
 
 
-                var texture =new THREE.TextureLoader().load('0.jpg',function () {
-                    renderer.render(scene, camera);
-    });
+                var texture =new THREE.TextureLoader().load('0.jpg');
                 var material=new THREE.MeshLambertMaterial({
                     map:texture
                 })
